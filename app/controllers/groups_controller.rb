@@ -12,7 +12,7 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    @group = Group.find(params[:id])
+
 
   end
 
@@ -32,7 +32,7 @@ class GroupsController < ApplicationController
 end
 
   def update
-    @group = Group.find(params[:id])
+
 
 
   if  @group.update(group_params)
@@ -44,8 +44,8 @@ end
 end
 
   def destroy
-    @group = Group.find(params[:id])
-  
+
+
     @group.destroy
     flash[:alert] = "Group deleted"
     redirect_to groups_path
@@ -61,5 +61,3 @@ end
   def group_params
     params.require(:group).permit(:title, :description)
   end
-
-end
