@@ -11,54 +11,38 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @posts = @group.posts
   end
-
   def edit
+    end
 
 
-  end
-
-  def new
-    @group = Group.new
-  end
-
-  def create
-    @group = Group.new(group_params)
-    @group.user = current_user
-    if @group.save
-
-      redirect_to groups_path
-  else
-    render :new
-  end
-end
-
-  def update
+    def update
 
 
 
-  if  @group.update(group_params)
-
-    redirect_to groups_path, notice: "Update Success"
-  else
-    render :edit
-  end
-end
+      if @group.update(group_params)
+        redirect_to groups_path, notice: "Update Success"
+      else
+        render :edit
+      end
+    end
 
   def destroy
-
+    
 
     @group.destroy
-    flash[:alert] = "Group deleted"
-    redirect_to groups_path
+    redirect_to groups_path, alert: "Group deleted"
   end
-
   private
   def find_group_check_permission
     @group = Group.find(params[:id])
-    redirect_to root_path, alert: "You have no permission."
+
+    if current_user != @group.user
+      redirect_to root_path, alert: "You have no permission."
     end
   end
+
 
   def group_params
     params.require(:group).permit(:title, :description)
   end
+end
